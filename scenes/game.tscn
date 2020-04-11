@@ -13,4 +13,5 @@ scale = Vector2( 0.997902, 1.12154 )
 texture = ExtResource( 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
+
 [node name="Board" parent="." instance=ExtResource( 2 )]
