@@ -11,4 +11,4 @@ position = Vector2( 30.7807, 254.403 )
 scale = Vector2( 0.997902, 1.12154 )
 texture = ExtResource( 1 )
 
-[node name="Board" parent="TableTop" instance=ExtResource( 2 )]
+[node name="Board" parent="." instance=ExtResource( 2 )]
