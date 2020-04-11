@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/tabletop.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 481, 127 )
+
+[node name="TableTop" type="Sprite" parent="."]
+position = Vector2( -345, -0.999756 )
+scale = Vector2( 1.06083, 0.976667 )
+texture = ExtResource( 1 )
