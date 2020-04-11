@@ -13,9 +13,21 @@ _global_script_classes=[ {
 "class": "Board",
 "language": "GDScript",
 "path": "res://scripts/Board.gd"
+}, {
+"base": "Tile",
+"class": "ChurchTile",
+"language": "GDScript",
+"path": "res://scripts/tiles/ChurchTile.gd"
+}, {
+"base": "Node2D",
+"class": "Tile",
+"language": "GDScript",
+"path": "res://scripts/tiles/Tile.gd"
 } ]
 _global_script_class_icons={
-"Board": ""
+"Board": "",
+"ChurchTile": "",
+"Tile": ""
 }
 
 [application]
