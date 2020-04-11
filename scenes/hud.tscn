@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 10.7284
+margin_top = 12.0268
+margin_right = 78.7284
+margin_bottom = 26.0268
+text = "Score: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
