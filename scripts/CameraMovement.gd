@@ -21,13 +21,8 @@ var zooming = false
 var is_dragging = false
 var move_to_point = Vector2()
 
-onready var rectd = $'../UI/Base/draw_rect'
-
-signal area_selected
-signal start_move_selection
-
 func _ready():
-	connect("start_move_selection", get_parent(), "start_move_selection", [self])
+	pass
 
 
 func _process(delta):
