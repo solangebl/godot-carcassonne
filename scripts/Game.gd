@@ -14,12 +14,16 @@ func _ready():
 	
 	var TileStack = load("res://scripts/TileStack.gd")
 	stack = TileStack.new()
-	
 	# Start the first turn
 	emit_signal("end_turn")
 
 func _on_Game_end_turn():
 	current_tile = stack.pull_next_tile()
+	
+	var next_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()
+	for i in $HUD/CurrentTile.get_children():
+		i.queue_free()
+	$HUD/CurrentTile.add_child(next_tile)
 	print("Next turn...")
 	
 	
