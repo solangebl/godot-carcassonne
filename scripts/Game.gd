@@ -15,6 +15,9 @@ func _ready():
 	var TileStack = load("res://scripts/TileStack.gd")
 	stack = TileStack.new()
 	
+	var Board = load("res://scripts/Board.gd")
+	var board = Board.new()
+	
 	# Start the first turn
 	emit_signal("end_turn")
 

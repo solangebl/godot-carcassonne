@@ -23,31 +23,29 @@ func _ready():
 			grid[x].append(null)
 	# TODO: move to game generate_tiles()
 
-func generate_tiles():
-	# TODO: generate game tiles, randomly save them in a stack to get them one by one
-	
+func place_initial_tile():
 	# place initial tile at the center of the board
 	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
 	initial_tile.set_scale(Vector2(scale_perc,scale_perc))
 	add_child(initial_tile)
 	initial_tile.setPos(((BOARD_DIMENTIONS.x/2)-1)*item_size,((BOARD_DIMENTIONS.y/2)-1)*item_size)
 	
-func place_tile(tile, x, y):
+func place_tile(tile, pos: Vector2):
 	# 1. validate position is empty and within limits
-	print(is_vacant(x,y))
+	print(is_vacant(pos))
 	#if(is_vacant(x,y)):
 	# 2. add tile to the grid
-	grid[x][y] = "tile"
+	grid[pos.x][pos.y] = "tile"
 	# 3. show tile on board
-	show_tile(tile, x, y)
+	show_tile(tile, pos)
 	
-func show_tile(tile, x, y):
+func show_tile(tile, pos: Vector2):
 	tile.set_scale(Vector2(scale_perc,scale_perc))
 	add_child(tile)
-	tile.setPos(x*item_size,y*item_size)
+	tile.setPos(pos.x*item_size,pos.y*item_size)
 	
-func is_vacant(x,y):
-	return grid[x][y] != null
+func is_vacant(pos):
+	return grid[pos.x][pos.y] != null
 	
 func _input(event):
 	# Mouse in viewport coordinates
@@ -55,7 +53,7 @@ func _input(event):
 		# translate position to board
 		var new_pos = world_to_map((event.position))
 		var new_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
-		place_tile(new_tile, new_pos.x, new_pos.y)
+		place_tile(new_tile, new_pos)
 		# place a tile at computed position 
 
 # Should decide if a tile can be placed at pos (x,y)
