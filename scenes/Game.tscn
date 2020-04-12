@@ -9,14 +9,14 @@
 position = Vector2( 481, 127 )
 
 [node name="TableTop" type="Sprite" parent="."]
-position = Vector2( 479.979, 413.804 )
+position = Vector2( 479.979, 414.804 )
 scale = Vector2( 1.01175, 0.965176 )
 texture = ExtResource( 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
 [node name="Board" parent="." instance=ExtResource( 3 )]
-position = Vector2( 135.797, -125.229 )
+position = Vector2( -33, -127 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 480.241, 414.57 )
