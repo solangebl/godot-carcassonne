@@ -3,20 +3,19 @@ class_name Board
 
 const BOARD_DIMENTIONS = Vector2(10,10)
 
-# TODO: calculate scale_perc based on screen size?
-var scale_perc = 0.5
-var item_size = 330*scale_perc
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+var full_h = 1080
+var full_item_size = 330
+var scale_perc = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var act_h = get_viewport().size.y
+	scale_perc = float(act_h)/full_h
 	generate_tiles()
+	print(get_viewport().size.x)
 
 func generate_tiles():
+	var item_size = full_item_size*scale_perc
 	# TODO: generate game tiles, randomly save them in a stack to get them one by one
 	# TEST
 	for x in range(BOARD_DIMENTIONS.x):
