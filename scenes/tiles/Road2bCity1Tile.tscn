@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/tiles/road2b_city1.png" type="Texture" id=1]
+[ext_resource path="res://scripts/tiles/Road2bCity1Tile.gd" type="Script" id=2]
+
+[node name="Road2bCity1Tile" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 165.446, 165.446 )
+texture = ExtResource( 1 )
