@@ -1,8 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
-
-
+[ext_resource path="res://assets/tiles/road2a_city1.png" type="Texture" id=2]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -16,3 +15,8 @@ text = "Score: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CurrentTile" type="Sprite" parent="."]
+position = Vector2( 1755.41, 932.636 )
+scale = Vector2( 0.411832, 0.411832 )
+texture = ExtResource( 2 )

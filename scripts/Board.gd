@@ -51,7 +51,7 @@ func is_vacant(x,y):
 	
 func _input(event):
 	# Mouse in viewport coordinates
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		# translate position to board
 		var new_pos = world_to_map((event.position))
 		var new_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
