@@ -14,7 +14,8 @@ func _ready():
 	current_tile = stack.pull_next_tile()
 	
 	hud = get_node("HUD")
-	hud.add_child(current_tile.instance())
+	var tile_scene = load("res://scenes/tiles/"+current_tile.get_class()+".tscn")
+	hud.add_child(tile_scene.instance())
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
