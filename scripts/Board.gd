@@ -12,7 +12,6 @@ func _ready():
 	var act_h = get_viewport().size.y
 	scale_perc = float(act_h)/full_h
 	generate_tiles()
-	print(get_viewport().size.x)
 
 func generate_tiles():
 	var item_size = full_item_size*scale_perc
