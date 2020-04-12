@@ -24,7 +24,7 @@ func generate_tiles():
 	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
 	initial_tile.set_scale(Vector2(scale_perc,scale_perc))
 	add_child(initial_tile)
-	initial_tile.setPos((BOARD_DIMENTIONS.x/2)*item_size,(BOARD_DIMENTIONS.y/2)*item_size)
+	initial_tile.setPos(((BOARD_DIMENTIONS.x/2)-1)*item_size,((BOARD_DIMENTIONS.y/2)-1)*item_size)
 	
 func place_tile(x,y):
 	pass
