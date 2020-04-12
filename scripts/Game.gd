@@ -15,8 +15,17 @@ func _ready():
 	var TileStack = load("res://scripts/TileStack.gd")
 	stack = TileStack.new()
 	
+	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
+	$Board.place_tile_center(initial_tile)
+	
 	# Start the first turn
 	emit_signal("end_turn")
+	
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
+		var new_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
+		$Board.place_tile(new_tile, event.position)
+		emit_signal("end_turn")
 
 func _on_Game_end_turn():
 	current_tile = stack.pull_next_tile()
