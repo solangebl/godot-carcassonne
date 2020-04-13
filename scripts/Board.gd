@@ -16,6 +16,7 @@ func _ready():
 	# calculate grid item sizes
 	var act_h = get_viewport().size.y
 	item_size = float(act_h)/BOARD_DIMENTIONS.y
+	set_cell_size(Vector2(item_size, item_size))
 	scale_perc = (item_size)/full_item_size
 	
 	# initialize the empty grid
@@ -27,16 +28,14 @@ func _ready():
 
 func place_tile_center(tile):
 	var center = Vector2((((BOARD_DIMENTIONS.x/2)-1)*item_size), ((BOARD_DIMENTIONS.y/2)-1)*item_size)
-	print(center)
+	#print(center)
 	place_tile(tile, center)
 	
 func place_tile(tile, pos: Vector2):
 	# 1. validate position is empty and within limits
-	var p = world_to_map(pos)
-	print(is_vacant(p))
+	var p = world_to_map(pos) 
 	#if(is_vacant(x,y)):
 	# 2. add tile to the grid
-	grid[p.x][p.y] = "tile"
 	# 3. show tile on board
 	show_tile(tile, p)
 	emit_signal("end_turn")

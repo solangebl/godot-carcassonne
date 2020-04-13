@@ -23,7 +23,10 @@ func _ready():
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
+		print($Camera2D.zoom)
+		print($Camera2D.offset)
 		var new_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
+		var pos = event.position * $Camera2D.zoom + $Camera2D.offset
 		$Board.place_tile(new_tile, event.position)
 		emit_signal("end_turn")
 
