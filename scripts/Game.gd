@@ -23,7 +23,7 @@ func _ready():
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
-		var new_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
+		var new_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()
 		$Board.place_tile(new_tile, $Camera2D.get_global_mouse_position())
 		emit_signal("end_turn")
 
