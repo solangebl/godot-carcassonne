@@ -5,8 +5,6 @@ var stack
 var hud_current_tile
 var current_tile
 
-signal end_turn
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -19,15 +17,16 @@ func _ready():
 	$Board.place_tile_center(initial_tile)
 	
 	# Start the first turn
-	emit_signal("end_turn")
+	end_turn()
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
 		var new_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()
-		$Board.place_tile(new_tile, $Camera2D.get_global_mouse_position())
-		emit_signal("end_turn")
+		var placed = $Board.place_tile(new_tile, $Camera2D.get_global_mouse_position())
+		if(placed):
+			end_turn()
 
-func _on_Game_end_turn():
+func end_turn():
 	current_tile = stack.pull_next_tile()
 	
 	var next_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()

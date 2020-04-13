@@ -9,8 +9,6 @@ var item_size = full_item_size
 
 var grid = []
 
-signal end_turn
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# calculate grid item sizes
@@ -34,11 +32,14 @@ func place_tile_center(tile):
 func place_tile(tile, pos: Vector2):
 	# 1. validate position is empty and within limits
 	var p = world_to_map(pos) 
-	#if(is_vacant(x,y)):
-	# 2. add tile to the grid
-	# 3. show tile on board
-	show_tile(tile, p)
-	emit_signal("end_turn")
+	print(is_vacant(p))
+	if(is_vacant(p)):
+		# 2. add tile to the grid
+		grid[p.x][p.y] = "tile"
+		# 3. show tile on board
+		show_tile(tile, p)
+		return true
+	return false
 	
 func show_tile(tile, pos: Vector2):
 	tile.set_scale(Vector2(scale_perc,scale_perc))
@@ -46,7 +47,7 @@ func show_tile(tile, pos: Vector2):
 	tile.setPos(pos.x*item_size,pos.y*item_size)
 	
 func is_vacant(pos):
-	return grid[pos.x][pos.y] != null
+	return grid[pos.x][pos.y] != "tile"
 
 
 # Should decide if a tile can be placed at pos (x,y)
