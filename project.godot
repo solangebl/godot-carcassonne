@@ -94,6 +94,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/tiles/InitialTile.gd"
 }, {
+"base": "Node",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+}, {
+"base": "Node",
+"class": "Players",
+"language": "GDScript",
+"path": "res://scripts/Players.gd"
+}, {
 "base": "Tile",
 "class": "Road2City2BonusTile",
 "language": "GDScript",
@@ -172,6 +182,8 @@ _global_script_class_icons={
 "City4BonusTile": "",
 "Game": "",
 "InitialTile": "",
+"Player": "",
+"Players": "",
 "Road2City2BonusTile": "",
 "Road2City2Tile": "",
 "Road2aCity1Tile": "",

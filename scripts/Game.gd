@@ -2,22 +2,29 @@ extends Node2D
 class_name Game
 
 var stack
-var hud_current_tile
 var current_tile
+var players
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
 	connect("end_turn", self, "_on_Game_end_turn")
-	
-	var TileStack = load("res://scripts/TileStack.gd")
+
 	stack = TileStack.new()
+	
+	players = Players.new()
+	
+	var player1 = Player.new("Pato")
+	var player2 = Player.new("Soli")
+	
+	players.add(player1)
+	players.add(player2)
 	
 	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
 	$Board.place_tile_center(initial_tile)
 	
 	# Start the first turn
-	end_turn()
+	pick_tile()
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
@@ -26,14 +33,18 @@ func _input(event):
 		if(placed):
 			end_turn()
 
-func end_turn():
+func pick_tile():
 	current_tile = stack.pull_next_tile()
 	
-	var next_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()
+func end_turn():
+	players.next_player()
+	pick_tile()
+	
+	var hud_next_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()
 	for i in $HUD/CurrentTile.get_children():
 		i.queue_free()
-	$HUD/CurrentTile.add_child(next_tile)
-	print("Next turn...")
+	$HUD/CurrentTile.add_child(hud_next_tile)
+	print("Next turn..."+players.current_player().player_name())
 	
 	
 
