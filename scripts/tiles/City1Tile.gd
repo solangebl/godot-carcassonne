@@ -7,6 +7,8 @@ func _init():
 	right = Content.FIELD;
 	bottom = Content.FIELD;
 	left = Content.FIELD;
+	
+	texture = "city1.png"
 
 func get_class(): return "City1Tile"
 # Called every frame. 'delta' is the elapsed time since the previous frame.

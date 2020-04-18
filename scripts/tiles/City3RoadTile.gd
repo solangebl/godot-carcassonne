@@ -7,6 +7,8 @@ func _init():
 	right = Content.CITY;
 	bottom = Content.PATH;
 	left = Content.CITY;
+	
+	texture = "city3_road.png"
 
 func get_class(): return "City3RoadTile"
 # Called every frame. 'delta' is the elapsed time since the previous frame.

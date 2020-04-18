@@ -11,6 +11,8 @@ var right
 var bottom
 var left
 
+var texture
+
 var has_bonus = false
 
 # Called when the node enters the scene tree for the first time.
@@ -27,6 +29,20 @@ func getPos():
 	
 func get_right():
 	return self.right
+	
+func get_texture_name():
+	return texture
+	
+func get_texture():
+	var text_object = load("res://assets/tiles/"+get_texture_name())
+	return text_object
+	
+func rotate_clockwise():
+	var old_top = top
+	top = left
+	left = bottom
+	bottom = right
+	right = old_top
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
