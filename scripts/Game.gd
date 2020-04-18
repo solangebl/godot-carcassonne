@@ -24,7 +24,7 @@ func _ready():
 	# Start the first turn
 	pick_tile()
 	
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
 		var current_pos = $Camera2D.get_global_mouse_position()
 		if(valid_position(current_tile, current_pos)):
@@ -41,10 +41,10 @@ func _input(event):
 func pick_tile():
 	# restore original rotation
 	if is_instance_valid(current_tile):
-		$HUD/VBoxContainer/HBoxContainer/CurrentTile.rotate(deg2rad(-1*current_tile.get_tile_rotation()*90))
+		$HUD/CurrentTile.rotate(deg2rad(-1*current_tile.get_tile_rotation()*90))
 	current_tile = stack.pull_next_tile()
 	var current_tile_texture = current_tile.get_texture()
-	$HUD/VBoxContainer/HBoxContainer/CurrentTile.set_texture(current_tile_texture)
+	$HUD/CurrentTile.set_texture(current_tile_texture)
 	
 func end_turn():
 	players.next_player()
@@ -56,7 +56,7 @@ func valid_position(tile, pos):
 func rotate_current_tile():
 	current_tile.rotate_clockwise()
 	print(current_tile.get_tile_rotation())
-	$HUD/VBoxContainer/HBoxContainer/CurrentTile.rotate(deg2rad(90))
+	$HUD/CurrentTile.rotate(deg2rad(90))
 	
 	
 

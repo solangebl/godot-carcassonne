@@ -5,7 +5,7 @@ class_name City3RoadBonusTile
 func _init():
 	top = Content.CITY;
 	right = Content.CITY;
-	bottom = Content.FIELD;
+	bottom = Content.PATH;
 	left = Content.CITY;
 	
 	texture = "city3_road_bonus.png"
