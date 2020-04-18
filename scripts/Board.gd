@@ -50,7 +50,7 @@ func _place_tile(tile, b_pos):
 func _show_tile(tile, b_pos: Vector2):
 	tile.set_scale(Vector2(scale_perc,scale_perc))
 	add_child(tile)
-	tile.setPos(b_pos.x*item_size,b_pos.y*item_size)
+	tile.setPos(b_pos.x*item_size+(item_size/2),b_pos.y*item_size+(item_size/2))
 	
 func _is_vacant(b_pos: Vector2):
 	return grid[b_pos.x][b_pos.y] == null
