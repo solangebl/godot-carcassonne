@@ -46,7 +46,7 @@ func end_turn():
 	print("Next turn..."+players.current_player().player_name())
 	
 func valid_position(tile, pos):
-	return $Board.matching_edges(tile, pos)
+	return $Board.has_neighbor(pos) and  $Board.matching_edges(tile, pos)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
