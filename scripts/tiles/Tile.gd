@@ -12,6 +12,7 @@ var bottom
 var left
 
 var texture
+var tile_rotation = 0
 
 var has_bonus = false
 
@@ -37,12 +38,16 @@ func get_texture():
 	var text_object = load("res://assets/tiles/"+get_texture_name())
 	return text_object
 	
+func get_tile_rotation():
+	return tile_rotation
+	
 func rotate_clockwise():
 	var old_top = top
 	top = left
 	left = bottom
 	bottom = right
 	right = old_top
+	tile_rotation = (get_tile_rotation()+1) % 4
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

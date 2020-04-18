@@ -12,4 +12,4 @@ func _ready():
 
 
 func _on_RotateButton_pressed():
-	$Game.current_tile.rotate_clockwise()
+	get_tree().get_current_scene().rotate_current_tile()

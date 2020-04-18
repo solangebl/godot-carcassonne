@@ -29,6 +29,9 @@ func _input(event):
 		var current_pos = $Camera2D.get_global_mouse_position()
 		if(valid_position(current_tile, current_pos)):
 			var new_tile = load('res://scenes/tiles/'+current_tile.get_class()+'.tscn').instance()
+			new_tile.rotate(deg2rad(current_tile.get_tile_rotation()*90))
+			for i in range(0,current_tile.get_tile_rotation()):
+				new_tile.rotate_clockwise()
 			var placed = $Board.place_tile(new_tile, current_pos)
 			if(placed):
 				end_turn()
@@ -36,17 +39,25 @@ func _input(event):
 			print('DEBUG: edges do not match')
 
 func pick_tile():
+	# restore original rotation
+	if is_instance_valid(current_tile):
+		$HUD/VBoxContainer/HBoxContainer/CurrentTile.rotate(deg2rad(-1*current_tile.get_tile_rotation()*90))
 	current_tile = stack.pull_next_tile()
 	var current_tile_texture = current_tile.get_texture()
 	$HUD/VBoxContainer/HBoxContainer/CurrentTile.set_texture(current_tile_texture)
 	
 func end_turn():
 	players.next_player()
-	pick_tile()	
-	print("Next turn..."+players.current_player().player_name())
+	pick_tile()
 	
 func valid_position(tile, pos):
 	return $Board.has_neighbor(pos) and  $Board.matching_edges(tile, pos)
+	
+func rotate_current_tile():
+	current_tile.rotate_clockwise()
+	print(current_tile.get_tile_rotation())
+	$HUD/VBoxContainer/HBoxContainer/CurrentTile.rotate(deg2rad(90))
+	
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -35,15 +35,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentTile" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
-margin_left = 1066.0
-margin_right = 1396.0
-margin_bottom = 512.0
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="RotateButton" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
 margin_left = 1400.0
 margin_right = 1912.0
@@ -52,4 +43,8 @@ texture_normal = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CurrentTile" type="Sprite" parent="VBoxContainer/HBoxContainer"]
+position = Vector2( 1183.5, 269.045 )
+texture = ExtResource( 2 )
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/RotateButton" to="." method="_on_RotateButton_pressed"]
