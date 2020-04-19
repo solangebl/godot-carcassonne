@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "TileMap",
+"base": "Node",
 "class": "Board",
 "language": "GDScript",
 "path": "res://scripts/Board.gd"

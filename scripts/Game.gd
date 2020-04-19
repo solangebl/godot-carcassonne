@@ -4,6 +4,7 @@ class_name Game
 var stack
 var current_tile
 var players
+var board
 
 enum PlaySteps {PLACE_TILE=0, PLACE_MEEPLE=1}
 var play_step
@@ -12,6 +13,7 @@ var play_step
 func _ready():
 
 	stack = TileStack.new()
+	board = Board.new($Board2D)
 	
 	players = Players.new()
 	
@@ -21,7 +23,7 @@ func _ready():
 	players.add(player1)
 	players.add(player2)
 	
-	$Board.place_initial_tile()
+	board.place_initial_tile()
 	
 	play_step = PlaySteps.PLACE_TILE
 	
@@ -38,7 +40,7 @@ func _unhandled_input(event):
 				new_tile.rotate(deg2rad(current_tile.get_tile_rotation()*90))
 				for i in range(0,current_tile.get_tile_rotation()):
 					new_tile.rotate_clockwise()
-				$Board.preview_tile(new_tile, current_pos)
+				board.preview_tile(new_tile, current_pos)
 			else:
 				print('DEBUG: edges do not match')
 
@@ -55,7 +57,7 @@ func end_turn():
 	pick_tile()
 	
 func valid_position(tile, pos):
-	return $Board.has_neighbor(pos) and $Board.matching_edges(tile, pos)
+	return board.has_neighbor(pos) and board.matching_edges(tile, pos)
 	
 func rotate_current_tile():
 	current_tile.rotate_clockwise()
@@ -63,7 +65,7 @@ func rotate_current_tile():
 	
 func confirm_action():
 	if play_step == PlaySteps.PLACE_TILE:
-		$Board.place_tile()
+		board.place_tile()
 		#play_step = PlaySteps.PLACE_MEEPLE
 		end_turn()
 	

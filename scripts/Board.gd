@@ -1,13 +1,11 @@
-extends TileMap
+extends Node
+
 class_name Board
 
-const FULL_ITEM_SIZE = 330
-
 # Default dimentions - x will be calculated based on viewport and item size
-var board_dimentions = Vector2(30,30)
+const board_dimentions = Vector2(30,30)
 
-var scale_perc = 1
-var item_size = FULL_ITEM_SIZE
+var visualboard
 
 var grid = []
 
@@ -15,41 +13,40 @@ var temporal_tile
 var tmp_tile_x
 var tmp_tile_y
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	# calculate grid item sizes based on viewport size
-	item_size = _calculate_item_size()
-	_set_dimentions()
-	
-	set_cell_size(Vector2(item_size, item_size))
-	scale_perc = (item_size)/FULL_ITEM_SIZE
-	
+func _init(board):
+	visualboard = board
+
 	# initialize the empty grid
 	for x in range(board_dimentions.x):
 		grid.append([])
 		for _y in range(board_dimentions.y):
 			grid[x].append(null)
+			
+static func get_board_dimentions():
+	return board_dimentions
 
 func place_initial_tile():
-	var center = Vector2((((board_dimentions.x/2)-1)*item_size), ((board_dimentions.y/2)-1)*item_size)
+	var p_center = visualboard.get_center_coordinates()
+	var b_center = visualboard.world_to_map(p_center)
+	print(b_center)
 	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
-	var p_center = world_to_map(center)
-	grid[p_center.x][p_center.y] = initial_tile
-	_show_tile_on_board(initial_tile, p_center)
+	grid[b_center.x][b_center.y] = initial_tile
+	
+	visualboard.place_initial_tile(initial_tile)
 	
 # Wrapper for the _place_tile method
 # pos is a world position
 func preview_tile(tile, w_pos: Vector2):
-	var p = world_to_map(w_pos) 
+	var b_pos = visualboard.world_to_map(w_pos)
 	if temporal_tile != null:
-		remove_child(temporal_tile)
+		visualboard.remove_tile(temporal_tile)
 	temporal_tile = tile
-	tmp_tile_x = p.x
-	tmp_tile_y = p.y
+	tmp_tile_x = b_pos.x
+	tmp_tile_y = b_pos.y
 	
-	if(_is_valid(p) and _is_vacant(p)):
+	if(_is_valid(b_pos) and _is_vacant(b_pos)):
 		# 3. show tile on board
-		_show_tile_on_board(tile, p)
+		visualboard.show_tile_on_board(tile, b_pos)
 		return true
 	return false
 	
@@ -58,34 +55,16 @@ func place_tile():
 	temporal_tile = null
 	tmp_tile_x = -1
 	tmp_tile_y = -1
-	
-func _show_tile_on_board(tile, b_pos: Vector2):
-	tile.set_scale(Vector2(scale_perc,scale_perc))
-	add_child(tile)
-	tile.setPos(b_pos.x*item_size+(item_size/2),b_pos.y*item_size+(item_size/2))
-	
+
 func _is_vacant(b_pos: Vector2):
 	return grid[b_pos.x][b_pos.y] == null
 
 func _is_valid(pos: Vector2):
 	var within_board = (pos.x >= 0 and pos.x <= board_dimentions.x-1) and (pos.y >= 0 and pos.y <= board_dimentions.y-1)
 	return within_board
-
-# Calculates item size based on viewport height and board y dimention
-func _calculate_item_size():
-	var act_h = get_viewport().size.y
-	return float(act_h)/board_dimentions.y
-	
-func _set_dimentions():
-	var act_w = get_viewport().size.x
-	var w_items = act_w/item_size
-	board_dimentions.x = w_items
-	
+		
 func has_neighbor(pos: Vector2):
-	pos = world_to_map(pos)
-	return _has_neighbor(pos)
-	
-func _has_neighbor(b_pos: Vector2):
+	var b_pos = visualboard.world_to_map(pos)
 	if(!_is_valid(b_pos)):
 		return true
 	var p_top = Vector2(b_pos.x,b_pos.y-1)
@@ -96,7 +75,7 @@ func _has_neighbor(b_pos: Vector2):
 	
 func matching_edges(tile, pos):
 	# get position in board
-	var p = world_to_map(pos)
+	var p = visualboard.world_to_map(pos)
 	if(!_is_valid(p)):
 		return false
 	# compare each edge to current board tiles
