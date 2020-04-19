@@ -1,14 +1,18 @@
 extends Node
 class_name Players
 
+var colors = ['red', 'blue', 'green', 'yellow', 'gray', 'pink']
+
 var players = []
 var current_player
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func _init():
+	randomize()
+	colors.shuffle()
 
 func add(player):
+	player.set_color(colors.pop_front())
 	players.append(player)
 
 func next_player():

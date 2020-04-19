@@ -15,13 +15,23 @@ func _ready():
 	stack = TileStack.new()
 	board = Board.new($Board2D)
 	
-	players = Players.new()
-	
 	var player1 = Player.new("Pato")
 	var player2 = Player.new("Soli")
 	
-	players.add(player1)
-	players.add(player2)
+	var players_list = []
+	players_list.append(player1)
+	players_list.append(player2)
+	
+	players = Players.new()
+	
+	for p in players_list:
+		players.add(p)
+		var player_hud = load('res://scenes/PlayerHUD.tscn').instance()
+		var meeple = load('res://assets/meeple_'+p.get_color()+'.png')
+		player_hud.get_node("HBoxContainer/Name").text = p.player_name()
+		player_hud.get_node("HBoxContainer/Meeple").set_texture(meeple)
+		p.add_hud(player_hud)
+		$HUD/Players.add_child(player_hud)	
 	
 	board.place_initial_tile()
 	
@@ -41,6 +51,7 @@ func _unhandled_input(event):
 				for i in range(0,current_tile.get_tile_rotation()):
 					new_tile.rotate_clockwise()
 				board.preview_tile(new_tile, current_pos)
+				$HUD/ConfirmButton.visible = true
 			else:
 				print('DEBUG: edges do not match')
 
@@ -53,7 +64,15 @@ func pick_tile():
 	$HUD/CurrentTile.set_texture(current_tile_texture)
 	
 func end_turn():
+	
+	# add points if any
+	var points = calculate_points()
+	var current_player = players.current_player()
+	current_player.add_points(points)
+	current_player.get_hud().get_node("Points").text = current_player.get_score()
+	# move to next player
 	players.next_player()
+	$HUD/ConfirmButton.visible = false
 	pick_tile()
 	
 func valid_position(tile, pos):
@@ -66,6 +85,14 @@ func rotate_current_tile():
 func confirm_action():
 	if play_step == PlaySteps.PLACE_TILE:
 		board.place_tile()
-		#play_step = PlaySteps.PLACE_MEEPLE
+		play_step = PlaySteps.PLACE_MEEPLE
+	elif play_step == PlaySteps.PLACE_MEEPLE:
 		end_turn()
+	
+func calculate_points():
+	var road_points = board.calculate_road_points()
+	var church_points = board.calculate_church_points()
+	var city_points = board.calculate_city_points()
+	
+	return road_points+church_points+city_points
 	

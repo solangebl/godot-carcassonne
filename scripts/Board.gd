@@ -107,3 +107,12 @@ func _matching_right_left(tile, board_pos):
 	if(_is_valid(e_left) and !_is_vacant(e_left)):
 		return grid[e_left.x][e_left.y].get('right') == tile.get('left')
 	return true
+	
+func calculate_road_points():
+	return 0
+
+func calculate_church_points():
+	return 0
+	
+func calculate_city_points():
+	return 0

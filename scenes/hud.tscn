@@ -26,6 +26,7 @@ __meta__ = {
 }
 
 [node name="ConfirmButton" type="TextureButton" parent="."]
+visible = false
 margin_left = 1760.29
 margin_top = 888.77
 margin_right = 1871.29
@@ -33,6 +34,15 @@ margin_bottom = 999.77
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 4 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Players" type="VBoxContainer" parent="."]
+margin_left = 22.0
+margin_top = 24.0
+margin_right = 630.0
+margin_bottom = 222.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
