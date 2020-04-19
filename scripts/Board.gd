@@ -3,7 +3,6 @@ extends Node
 class_name Board
 
 # Default dimentions - x will be calculated based on viewport and item size
-const board_dimentions = Vector2(30,30)
 
 var visualboard
 
@@ -17,18 +16,14 @@ func _init(board):
 	visualboard = board
 
 	# initialize the empty grid
-	for x in range(board_dimentions.x):
+	for x in range(visualboard.get_board_dimentions().x):
 		grid.append([])
-		for _y in range(board_dimentions.y):
+		for _y in range(visualboard.get_board_dimentions().y):
 			grid[x].append(null)
 			
-static func get_board_dimentions():
-	return board_dimentions
-
 func place_initial_tile():
 	var p_center = visualboard.get_center_coordinates()
 	var b_center = visualboard.world_to_map(p_center)
-	print(b_center)
 	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
 	grid[b_center.x][b_center.y] = initial_tile
 	
@@ -60,7 +55,7 @@ func _is_vacant(b_pos: Vector2):
 	return grid[b_pos.x][b_pos.y] == null
 
 func _is_valid(pos: Vector2):
-	var within_board = (pos.x >= 0 and pos.x <= board_dimentions.x-1) and (pos.y >= 0 and pos.y <= board_dimentions.y-1)
+	var within_board = (pos.x >= 0 and pos.x <= visualboard.get_board_dimentions().x-1) and (pos.y >= 0 and pos.y <= visualboard.get_board_dimentions().y-1)
 	return within_board
 		
 func has_neighbor(pos: Vector2):
