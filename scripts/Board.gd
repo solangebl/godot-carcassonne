@@ -11,6 +11,8 @@ var item_size = FULL_ITEM_SIZE
 
 var grid = []
 
+var last_tile_showed
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# calculate grid item sizes based on viewport size
@@ -26,22 +28,25 @@ func _ready():
 		for _y in range(board_dimentions.y):
 			grid[x].append(null)
 
-func place_tile_center(tile):
+func place_initial_tile():
 	var center = Vector2((((board_dimentions.x/2)-1)*item_size), ((board_dimentions.y/2)-1)*item_size)
-	place_tile(tile, center)
+	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
+	var p_center = world_to_map(center)
+	grid[p_center.x][p_center.y] = initial_tile
+	_show_tile(initial_tile, p_center)
 	
 # Wrapper for the _place_tile method
 # pos is a world position
 func place_tile(tile, w_pos: Vector2):
 	var p = world_to_map(w_pos) 
+	if last_tile_showed != null:
+		remove_child(last_tile_showed)
+	last_tile_showed = tile
 	return _place_tile(tile, p)
 
-# pos is a 
 func _place_tile(tile, b_pos):
 	# 1. validate position is empty and within limits
 	if(_is_valid(b_pos) and _is_vacant(b_pos)):
-		# 2. add tile to the grid
-		grid[b_pos.x][b_pos.y] = tile
 		# 3. show tile on board
 		_show_tile(tile, b_pos)
 		return true
@@ -98,8 +103,6 @@ func matching_edges(tile, pos):
 func _matching_bottom_top(tile, board_pos):
 	var pos_up = Vector2(board_pos.x,board_pos.y-1) 
 	if(_is_valid(pos_up) and !_is_vacant(pos_up)):
-		print('existing bottom: '+str(grid[pos_up.x][pos_up.y].get('bottom')))
-		print('new top: '+str(tile.get('top')))
 		return grid[pos_up.x][pos_up.y].get('bottom') == tile.get('top')
 	return true
 	
@@ -107,8 +110,6 @@ func _matching_bottom_top(tile, board_pos):
 func _matching_left_right(tile, board_pos):
 	var e_right = Vector2(board_pos.x+1,board_pos.y) 
 	if(_is_valid(e_right) and !_is_vacant(e_right)):
-		print('existing left: '+str(grid[e_right.x][e_right.y].get('left')))
-		print('new right: '+str(tile.get('right')))
 		return grid[e_right.x][e_right.y].get('left') == tile.get('right')
 	return true
 	
@@ -116,8 +117,6 @@ func _matching_left_right(tile, board_pos):
 func _matching_top_bottom(tile, board_pos):
 	var e_bottom = Vector2(board_pos.x,board_pos.y+1) 
 	if(_is_valid(e_bottom) and !_is_vacant(e_bottom)):
-		print('existing top: '+str(grid[e_bottom.x][e_bottom.y].get('top')))
-		print('new bottom: '+str(tile.get('bottom')))
 		return grid[e_bottom.x][e_bottom.y].get('top') == tile.get('bottom')
 	return true
 
@@ -125,7 +124,5 @@ func _matching_top_bottom(tile, board_pos):
 func _matching_right_left(tile, board_pos):
 	var e_left = Vector2(board_pos.x-1,board_pos.y) 
 	if(_is_valid(e_left) and !_is_vacant(e_left)):
-		print('existing right: '+str(grid[e_left.x][e_left.y].get('right')))
-		print('new left: '+str(tile.get('left')))
 		return grid[e_left.x][e_left.y].get('right') == tile.get('left')
 	return true

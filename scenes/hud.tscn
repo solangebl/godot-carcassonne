@@ -8,14 +8,15 @@
 script = ExtResource( 1 )
 
 [node name="CurrentTile" type="Sprite" parent="."]
-position = Vector2( 1568.71, 859.866 )
+position = Vector2( 1611.22, 884.414 )
+scale = Vector2( 0.720588, 0.720588 )
 texture = ExtResource( 2 )
 
 [node name="RotateButton" type="TextureButton" parent="."]
-margin_left = 1762.17
-margin_top = 696.073
-margin_right = 1859.17
-margin_bottom = 793.073
+margin_left = 1764.56
+margin_top = 722.418
+margin_right = 1861.56
+margin_bottom = 819.418
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 3 )
 expand = true
