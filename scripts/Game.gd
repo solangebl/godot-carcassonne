@@ -38,7 +38,7 @@ func _unhandled_input(event):
 				new_tile.rotate(deg2rad(current_tile.get_tile_rotation()*90))
 				for i in range(0,current_tile.get_tile_rotation()):
 					new_tile.rotate_clockwise()
-				$Board.place_tile(new_tile, current_pos)
+				$Board.preview_tile(new_tile, current_pos)
 			else:
 				print('DEBUG: edges do not match')
 
@@ -60,4 +60,10 @@ func valid_position(tile, pos):
 func rotate_current_tile():
 	current_tile.rotate_clockwise()
 	$HUD/CurrentTile.rotate(deg2rad(90))
+	
+func confirm_action():
+	if play_step == PlaySteps.PLACE_TILE:
+		$Board.place_tile()
+		#play_step = PlaySteps.PLACE_MEEPLE
+		end_turn()
 	

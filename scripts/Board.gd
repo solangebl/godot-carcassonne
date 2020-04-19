@@ -11,7 +11,9 @@ var item_size = FULL_ITEM_SIZE
 
 var grid = []
 
-var last_tile_showed
+var temporal_tile
+var tmp_tile_x
+var tmp_tile_y
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,26 +35,31 @@ func place_initial_tile():
 	var initial_tile = load('res://scenes/tiles/InitialTile.tscn').instance()
 	var p_center = world_to_map(center)
 	grid[p_center.x][p_center.y] = initial_tile
-	_show_tile(initial_tile, p_center)
+	_show_tile_on_board(initial_tile, p_center)
 	
 # Wrapper for the _place_tile method
 # pos is a world position
-func place_tile(tile, w_pos: Vector2):
+func preview_tile(tile, w_pos: Vector2):
 	var p = world_to_map(w_pos) 
-	if last_tile_showed != null:
-		remove_child(last_tile_showed)
-	last_tile_showed = tile
-	return _place_tile(tile, p)
-
-func _place_tile(tile, b_pos):
-	# 1. validate position is empty and within limits
-	if(_is_valid(b_pos) and _is_vacant(b_pos)):
+	if temporal_tile != null:
+		remove_child(temporal_tile)
+	temporal_tile = tile
+	tmp_tile_x = p.x
+	tmp_tile_y = p.y
+	
+	if(_is_valid(p) and _is_vacant(p)):
 		# 3. show tile on board
-		_show_tile(tile, b_pos)
+		_show_tile_on_board(tile, p)
 		return true
 	return false
 	
-func _show_tile(tile, b_pos: Vector2):
+func place_tile():
+	grid[tmp_tile_x][tmp_tile_y] = temporal_tile
+	temporal_tile = null
+	tmp_tile_x = -1
+	tmp_tile_y = -1
+	
+func _show_tile_on_board(tile, b_pos: Vector2):
 	tile.set_scale(Vector2(scale_perc,scale_perc))
 	add_child(tile)
 	tile.setPos(b_pos.x*item_size+(item_size/2),b_pos.y*item_size+(item_size/2))

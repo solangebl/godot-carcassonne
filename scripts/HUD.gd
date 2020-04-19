@@ -8,3 +8,7 @@ func _ready():
 func _on_RotateButton_pressed():
 	get_tree().get_current_scene().rotate_current_tile()
 	
+
+
+func _on_ConfirmButton_pressed():
+	get_tree().get_current_scene().confirm_action()
