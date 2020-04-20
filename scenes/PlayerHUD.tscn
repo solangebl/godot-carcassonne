@@ -3,64 +3,68 @@
 [ext_resource path="res://assets/chancery.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/meeple_red.png" type="Texture" id=2]
 
-[node name="PlayerHUD" type="Container"]
+[node name="PlayerHUD" type="HBoxContainer"]
 margin_left = 5.0
 margin_top = 3.0
 margin_right = 742.0
 margin_bottom = 62.0
+rect_scale = Vector2( 0.998191, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Meeple" type="TextureRect" parent="."]
+margin_right = 50.0
+margin_bottom = 59.0
+texture = ExtResource( 2 )
 
-[node name="Name" type="Label" parent="HBoxContainer"]
-margin_right = 206.0
-margin_bottom = 45.0
+[node name="Name" type="Label" parent="."]
+margin_left = 54.0
+margin_top = 7.0
+margin_right = 260.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = "Player name"
 
-[node name="Text0" type="Label" parent="HBoxContainer"]
-margin_left = 210.0
-margin_right = 222.0
-margin_bottom = 45.0
+[node name="Text0" type="Label" parent="."]
+margin_left = 264.0
+margin_top = 7.0
+margin_right = 276.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = ":"
 
-[node name="Score" type="Label" parent="HBoxContainer"]
-margin_left = 226.0
-margin_right = 247.0
-margin_bottom = 45.0
+[node name="Score" type="Label" parent="."]
+margin_left = 280.0
+margin_top = 7.0
+margin_right = 301.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = "0"
 
-[node name="Text" type="Label" parent="HBoxContainer"]
-margin_left = 251.0
-margin_right = 429.0
-margin_bottom = 45.0
+[node name="Text" type="Label" parent="."]
+margin_left = 305.0
+margin_top = 7.0
+margin_right = 483.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = "points and"
 
-[node name="Meeples" type="Label" parent="HBoxContainer"]
-margin_left = 433.0
-margin_right = 454.0
-margin_bottom = 45.0
+[node name="Meeples" type="Label" parent="."]
+margin_left = 487.0
+margin_top = 7.0
+margin_right = 508.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = "7"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text2" type="Label" parent="HBoxContainer"]
-margin_left = 458.0
-margin_right = 653.0
-margin_bottom = 45.0
+[node name="Text2" type="Label" parent="."]
+margin_left = 512.0
+margin_top = 7.0
+margin_right = 707.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = "meeples left"
-
-[node name="Meeple" type="Sprite" parent="HBoxContainer"]
-position = Vector2( 703.361, 21.6177 )
-scale = Vector2( 0.0703781, 0.0703781 )
-texture = ExtResource( 2 )

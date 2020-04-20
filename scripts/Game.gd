@@ -28,8 +28,8 @@ func _ready():
 		players.add(p)
 		var player_hud = load('res://scenes/PlayerHUD.tscn').instance()
 		var meeple = load('res://assets/meeple_'+p.get_color()+'.png')
-		player_hud.get_node("HBoxContainer/Name").text = p.player_name()
-		player_hud.get_node("HBoxContainer/Meeple").set_texture(meeple)
+		player_hud.get_node("Name").text = p.player_name()
+		player_hud.get_node("Meeple").set_texture(meeple)
 		p.add_hud(player_hud)
 		$HUD/Players.add_child(player_hud)	
 	
