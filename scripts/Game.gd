@@ -32,6 +32,8 @@ func _ready():
 		player_hud.get_node("Meeple").set_texture(meeple)
 		p.add_hud(player_hud)
 		$HUD/Players.add_child(player_hud)	
+		
+	players.next_player()
 	
 	board.place_initial_tile()
 	
@@ -52,8 +54,11 @@ func _unhandled_input(event):
 					new_tile.rotate_clockwise()
 				board.preview_tile(new_tile, current_pos)
 				$HUD/ConfirmButton.visible = true
+				$HUD/RotateButton.visible = false
 			else:
 				print('DEBUG: edges do not match')
+		elif play_step == PlaySteps.PLACE_MEEPLE:
+			pass
 
 func pick_tile():
 	# restore original rotation
@@ -62,19 +67,7 @@ func pick_tile():
 	current_tile = stack.pull_next_tile()
 	var current_tile_texture = current_tile.get_texture()
 	$HUD/CurrentTile.set_texture(current_tile_texture)
-	
-func end_turn():
-	
-	# add points if any
-	var points = calculate_points()
-	var current_player = players.current_player()
-	current_player.add_points(points)
-	current_player.get_hud().get_node("Points").text = current_player.get_score()
-	# move to next player
-	players.next_player()
-	$HUD/ConfirmButton.visible = false
-	pick_tile()
-	
+		
 func valid_position(tile, pos):
 	return board.has_neighbor(pos) and board.matching_edges(tile, pos)
 	
@@ -85,14 +78,35 @@ func rotate_current_tile():
 func confirm_action():
 	if play_step == PlaySteps.PLACE_TILE:
 		board.place_tile()
-		play_step = PlaySteps.PLACE_MEEPLE
+		if players.current_player().meeples_left() > 0:
+			board.show_meeple_options(players.current_player().get_color())
+			play_step = PlaySteps.PLACE_MEEPLE
+		else:
+			end_turn()
 	elif play_step == PlaySteps.PLACE_MEEPLE:
 		end_turn()
-	
+		
+func place_meeple(position):
+	board.place_meeple(position)
+	players.current_player().use_meeple()
+		
 func calculate_points():
 	var road_points = board.calculate_road_points()
 	var church_points = board.calculate_church_points()
 	var city_points = board.calculate_city_points()
 	
 	return road_points+church_points+city_points
-	
+
+func end_turn():
+	# add points if any
+	var points = calculate_points()
+	var current_player = players.current_player()
+	current_player.add_points(points)
+	current_player.get_hud().get_node("Score").text = str(current_player.get_score())
+	current_player.get_hud().get_node("Meeples").text = str(current_player.meeples_left())
+	# move to next player
+	players.next_player()
+	$HUD/ConfirmButton.visible = false
+	$HUD/RotateButton.visible = true
+	play_step = PlaySteps.PLACE_TILE
+	pick_tile()

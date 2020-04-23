@@ -5,7 +5,7 @@ const FULL_ITEM_SIZE = 330
 var scale_perc = 1
 var item_size = FULL_ITEM_SIZE
 
-var board_dimentions = Vector2(30,30)
+var board_dimentions = Vector2(15,15)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,6 +34,26 @@ func show_tile_on_board(tile, b_pos: Vector2):
 	
 func remove_tile(tile):
 	remove_child(tile)
+	
+func show_meeple_options(color, tile):
+	for n in tile.get_children():
+		if n is Position2D:
+			var m = load('res://scenes/Meeple.tscn').instance()
+			m.get_node('Button').set_normal_texture(load("res://assets/meeple_"+color+".png"))
+			m.set_rotation(deg2rad(-1*tile.get_tile_rotation()*90))
+			m.modulate = Color(1,1,1,0.5)
+			n.add_child(m)
+	
+func place_meeple(position, tile):
+	for p in tile.get_children():
+		if p is Position2D:
+			if p != position:
+				for c in p.get_children():
+					p.remove_child(c)
+					p.queue_free()
+			else:
+				for c in p.get_children():
+					c.modulate = Color(1,1,1,1)
 
 # Calculates item size based on viewport height and board y dimention
 func _calculate_item_size():

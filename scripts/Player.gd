@@ -31,7 +31,7 @@ func get_color():
 	
 func use_meeple():
 	meeples = meeples-1
-
+	
 func recover_meeples(amount):
 	meeples = meeples+amount
 

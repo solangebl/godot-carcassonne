@@ -9,6 +9,7 @@ var visualboard
 var grid = []
 
 var temporal_tile
+var last_tile
 var tmp_tile_x
 var tmp_tile_y
 
@@ -46,11 +47,18 @@ func preview_tile(tile, w_pos: Vector2):
 	return false
 	
 func place_tile():
+	last_tile = temporal_tile
 	grid[tmp_tile_x][tmp_tile_y] = temporal_tile
 	temporal_tile = null
 	tmp_tile_x = -1
 	tmp_tile_y = -1
-
+	
+func show_meeple_options(color):
+	visualboard.show_meeple_options(color, last_tile)
+	
+func place_meeple(position):
+	visualboard.place_meeple(position, last_tile)
+	
 func _is_vacant(b_pos: Vector2):
 	return grid[b_pos.x][b_pos.y] == null
 
