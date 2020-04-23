@@ -40,7 +40,7 @@ func _init():
 			var tile = load('res://scripts/tiles/'+key+'.gd').new()
 			stack.append(tile)
 	
-	#randomize()
+	randomize()
 	stack.shuffle()
 
 func pull_next_tile():

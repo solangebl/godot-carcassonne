@@ -8,3 +8,14 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+
+[node name="Path" type="Position2D" parent="."]
+
+[node name="City" type="Position2D" parent="."]
+position = Vector2( 0, -128 )
+
+[node name="FieldTop" type="Position2D" parent="."]
+position = Vector2( 0, -63 )
+
+[node name="FieldBottom" type="Position2D" parent="."]
+position = Vector2( 0, 96 )

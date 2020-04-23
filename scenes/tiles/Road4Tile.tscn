@@ -8,3 +8,27 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+
+[node name="PathTop" type="Position2D" parent="."]
+position = Vector2( 0, -96 )
+
+[node name="PathBottom" type="Position2D" parent="."]
+position = Vector2( 0, 96 )
+
+[node name="PathLeft" type="Position2D" parent="."]
+position = Vector2( -96, 0 )
+
+[node name="PathRight" type="Position2D" parent="."]
+position = Vector2( 96, 0 )
+
+[node name="FieldTopLeft" type="Position2D" parent="."]
+position = Vector2( -96, -96 )
+
+[node name="FieldTopRight" type="Position2D" parent="."]
+position = Vector2( 96, -96 )
+
+[node name="FieldBottomRight" type="Position2D" parent="."]
+position = Vector2( 96, 96 )
+
+[node name="FieldBottomLeft" type="Position2D" parent="."]
+position = Vector2( -96, 96 )
