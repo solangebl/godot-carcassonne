@@ -10,3 +10,7 @@ func _on_RotateButton_pressed():
 	
 func _on_ConfirmButton_pressed():
 	get_tree().get_current_scene().confirm_action()
+
+
+func _on_CancelButton_pressed():
+	get_tree().get_current_scene().cancel_action()

@@ -9,6 +9,8 @@ var board
 enum PlaySteps {PLACE_TILE=0, PLACE_MEEPLE=1}
 var play_step
 
+var current_player_used_meeple
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
@@ -38,6 +40,7 @@ func _ready():
 	board.place_initial_tile()
 	
 	play_step = PlaySteps.PLACE_TILE
+	current_player_used_meeple = false
 	
 	# Start the first turn
 	pick_tile()
@@ -54,7 +57,6 @@ func _unhandled_input(event):
 					new_tile.rotate_clockwise()
 				board.preview_tile(new_tile, current_pos)
 				$HUD/ConfirmButton.visible = true
-				$HUD/RotateButton.visible = false
 			else:
 				print('DEBUG: edges do not match')
 		elif play_step == PlaySteps.PLACE_MEEPLE:
@@ -74,13 +76,26 @@ func valid_position(tile, pos):
 func rotate_current_tile():
 	current_tile.rotate_clockwise()
 	$HUD/CurrentTile.rotate(deg2rad(90))
-	
+
+func cancel_action():
+	if play_step == PlaySteps.PLACE_MEEPLE:
+		if current_player_used_meeple:
+			players.current_player().recover_meeples(1)
+		board.remove_last_tile()
+		$HUD/RotateButton.visible = true
+		$HUD/ConfirmButton.visible = true
+		$HUD/CancelButton.visible = false
+		play_step = PlaySteps.PLACE_TILE
+
 func confirm_action():
 	if play_step == PlaySteps.PLACE_TILE:
 		board.place_tile()
 		if players.current_player().meeples_left() > 0:
 			board.show_meeple_options(players.current_player().get_color())
 			play_step = PlaySteps.PLACE_MEEPLE
+			$HUD/RotateButton.visible = false
+			$HUD/ConfirmButton.visible = true
+			$HUD/CancelButton.visible = true
 		else:
 			end_turn()
 	elif play_step == PlaySteps.PLACE_MEEPLE:
@@ -89,6 +104,7 @@ func confirm_action():
 func place_meeple(position):
 	board.place_meeple(position)
 	players.current_player().use_meeple()
+	current_player_used_meeple = true
 		
 func calculate_points():
 	var road_points = board.calculate_road_points()
@@ -107,6 +123,8 @@ func end_turn():
 	# move to next player
 	players.next_player()
 	$HUD/ConfirmButton.visible = false
+	$HUD/CancelButton.visible = false
 	$HUD/RotateButton.visible = true
 	play_step = PlaySteps.PLACE_TILE
+	current_player_used_meeple = false
 	pick_tile()
