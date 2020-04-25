@@ -1,5 +1,4 @@
 extends Node
-class_name Players
 
 var colors = ['red', 'blue', 'green', 'yellow', 'gray', 'pink']
 
@@ -24,3 +23,6 @@ func next_player():
 	
 func current_player():
 	return current_player
+	
+func get_players():
+	return players
