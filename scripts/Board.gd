@@ -36,6 +36,11 @@ func place_initial_tile():
 	
 	visualboard.place_initial_tile(initial_tile)
 	
+func get_tile(pos: Vector2):
+	if(_is_valid(pos)):
+		return grid[pos.x][pos.y]
+	return false
+	
 # Wrapper for the _place_tile method
 # pos is a world position
 func preview_tile(tile, w_pos: Vector2):
@@ -77,7 +82,8 @@ func show_meeple_options(color):
 			options.append(n)
 	visualboard.show_meeple_options(options, color, last_tile)
 	
-func place_meeple(position):
+func place_meeple(position: Position2D, player):
+	last_tile.place_meeple(position, player)
 	visualboard.place_meeple(position, last_tile)
 	
 func _is_vacant(b_pos: Vector2):
@@ -141,7 +147,38 @@ func calculate_road_points():
 	return 0
 
 func calculate_church_points():
-	return 0
+	var church_owners = []
+	# check for surrounding churches, including current
+	var churches = churches_around(Vector2(last_tile_x, last_tile_y))
+	# check if any is completely surrounded now
+	for church in churches:
+		if(is_surrounded(church)):
+			print('church is surrounded')
+			var tile = get_tile(church)
+			var owner = tile.get_abbot()
+			if(owner != null):
+				church_owners.append(owner)
+	return church_owners
+	
+func churches_around(pos: Vector2):
+	var churches = []
+	for x in range(pos.x-1, pos.x+2):
+		for y in range(pos.y-1, pos.y+2):
+			var tile = get_tile(Vector2(x,y))
+			if(tile and tile.is_church()):
+				churches.append(Vector2(x,y))
+				
+	return churches
+	
+func is_surrounded(pos: Vector2):
+	var surrounded = true
+	for x in range(pos.x-1, pos.x+2):
+		for y in range(pos.y-1, pos.y+2):
+			if(x!=pos.x and y!=pos.y):
+				var tile = get_tile(Vector2(x,y))
+				if(!tile):
+					surrounded = false
+	return surrounded
 	
 func calculate_city_points():
 	return 0

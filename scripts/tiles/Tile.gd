@@ -1,6 +1,8 @@
 extends Node2D
 class_name Tile
 
+const CHURCH = 'Church'
+
 # Possible tile contents
 enum Content {FIELD=0, CITY=1, PATH=2}
 
@@ -48,7 +50,22 @@ func rotate_clockwise():
 	bottom = right
 	right = old_top
 	tile_rotation = (get_tile_rotation()+1) % 4
+	
+func place_meeple(position, player):
+	print(position.get("name"))
+	if(position.get("name")==CHURCH):
+		add_abbot(player)
+		
+	
+func add_abbot(player):
+	if(self.is_church()):
+		self.abbot = player
+		
+func is_church():
+	return false
+	
+func get_abbot():
+	if self.is_church():
+		return self.abbot
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

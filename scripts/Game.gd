@@ -1,6 +1,8 @@
 extends Node2D
 class_name Game
 
+const CHURCH_POINTS = 9
+
 var stack
 var current_tile
 var players
@@ -102,22 +104,33 @@ func confirm_action():
 		end_turn()
 		
 func place_meeple(position):
-	board.place_meeple(position)
+	board.place_meeple(position, players.current_player())
 	players.current_player().use_meeple()
 	current_player_used_meeple = true
-		
+	
+func assign_points():
+	assign_church_points()
+	
+func assign_church_points():
+	var users = board.calculate_church_points()
+	
+	for user in users:
+		user.add_points(CHURCH_POINTS)
+
+# WIP: this one will be replaced by assign_points
 func calculate_points():
+	var points = 0
 	var road_points = board.calculate_road_points()
-	var church_points = board.calculate_church_points()
 	var city_points = board.calculate_city_points()
 	
-	return road_points+church_points+city_points
+	return points
 
 func end_turn():
-	# add points if any
-	var points = calculate_points()
+	# add points if any - to the corresponding players
+	#var points = calculate_points()
 	var current_player = players.current_player()
-	current_player.add_points(points)
+	#current_player.add_points(points)
+	assign_points()
 	current_player.get_hud().get_node("Score").text = str(current_player.get_score())
 	current_player.get_hud().get_node("Meeples").text = str(current_player.meeples_left())
 	# move to next player

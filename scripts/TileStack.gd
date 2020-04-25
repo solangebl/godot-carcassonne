@@ -10,6 +10,13 @@ var stack = []
 # Called when the node enters the scene tree for the first time.
 func _init():
 	
+	""" FOR CHURCH TESTS
+	var tiles_amount = {
+		'ChurchTile': 10, 
+		'ChurchRoadTile': 10
+	}
+	"""
+	
 	var tiles_amount = {'ChurchTile': 4, 
 						'ChurchRoadTile': 2,
 						'City1Tile': 5,
@@ -33,7 +40,8 @@ func _init():
 						'Road2cCity1Tile': 3,
 						'Road3Tile': 4,
 						'Road3City1Tile': 3,
-						'Road4Tile': 1}
+						'Road4Tile': 1
+	}
 
 	for key in tiles_amount.keys():
 		for i in range(0,tiles_amount[key]):

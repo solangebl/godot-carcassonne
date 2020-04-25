@@ -1,6 +1,8 @@
 extends Tile
 class_name ChurchRoadTile
 
+var abbot = null
+
 # Called when the node enters the scene tree for the first time.
 func _init():
 	top = Content.FIELD
@@ -11,6 +13,6 @@ func _init():
 	texture = "church_road.png"
 
 func get_class(): return "ChurchRoadTile"
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func is_church():
+	return true
