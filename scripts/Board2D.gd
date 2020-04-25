@@ -42,7 +42,21 @@ func show_meeple_options(options, color, tile):
 		m.set_rotation(deg2rad(-1*tile.get_tile_rotation()*90))
 		m.modulate = Color(1,1,1,0.5)
 		n.add_child(m)
-	
+
+func hide_meeple_options(tile):
+	for p in tile.get_children():
+		if p is Position2D:
+			for c in p.get_children():
+				p.remove_child(c)
+				p.queue_free()
+
+func remove_meeple(tile, feature):
+	for f in tile.get_children():
+		if f is Position2D and f.get_name() == feature:
+			for c in f.get_children():
+				f.remove_child(c)
+				f.queue_free()
+					
 func place_meeple(position, tile):
 	for p in tile.get_children():
 		if p is Position2D:

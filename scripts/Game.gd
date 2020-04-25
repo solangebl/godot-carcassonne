@@ -93,6 +93,8 @@ func confirm_action():
 		else:
 			end_turn()
 	elif play_step == PlaySteps.PLACE_MEEPLE:
+		if not current_player_used_meeple:
+			board.hide_meeple_options()
 		end_turn()
 		
 func place_meeple(position):
@@ -104,18 +106,26 @@ func assign_points():
 	assign_church_points()
 	
 func assign_church_points():
-	var users = board.calculate_church_points()
+	var players_completing_church = board.get_players_completing_church()
 	
-	for user in users:
-		user.add_points(CHURCH_POINTS)
+	for player in players_completing_church:
+		player.recover_meeples(1)
+		player.add_points(CHURCH_POINTS)
+		update_player_score_hud(player)
+		update_player_meeples_hud(player)
 
+func update_player_score_hud(player):
+	player.get_hud().get_node("Score").text = str(player.get_score())
+	
+func update_player_meeples_hud(player):
+	player.get_hud().get_node("Meeples").text = str(player.meeples_left())
 
 func end_turn():
 	# add points if any - to the corresponding players
 	assign_points()
 	var current_player = players.current_player()
-	current_player.get_hud().get_node("Score").text = str(current_player.get_score())
-	current_player.get_hud().get_node("Meeples").text = str(current_player.meeples_left())
+	update_player_score_hud(current_player)
+	update_player_meeples_hud(current_player)
 	# move to next player
 	players.next_player()
 	$HUD/ConfirmButton.visible = false

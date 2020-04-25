@@ -52,14 +52,15 @@ func rotate_clockwise():
 	tile_rotation = (get_tile_rotation()+1) % 4
 	
 func place_meeple(position, player):
-	print(position.get("name"))
 	if(position.get("name")==CHURCH):
 		add_abbot(player)
-		
 	
 func add_abbot(player):
 	if(self.is_church()):
 		self.abbot = player
+		
+func remove_abbot():
+	self.abbot = null
 		
 func is_church():
 	return false

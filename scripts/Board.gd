@@ -74,6 +74,9 @@ func remove_last_tile():
 	last_tile_y = -1
 	visualboard.remove_tile(last_tile)
 	last_tile = null
+
+func hide_meeple_options():
+	visualboard.hide_meeple_options(last_tile)
 	
 func show_meeple_options(color):
 	var options = []
@@ -146,7 +149,7 @@ func _matching_right_left(tile, board_pos):
 func calculate_road_points():
 	return 0
 
-func calculate_church_points():
+func get_players_completing_church():
 	var church_owners = []
 	# check for surrounding churches, including current
 	var churches = churches_around(Vector2(last_tile_x, last_tile_y))
@@ -156,8 +159,11 @@ func calculate_church_points():
 			print('church is surrounded')
 			var tile = get_tile(church)
 			var owner = tile.get_abbot()
-			if(owner != null):
+			if(is_instance_valid(owner)):
 				church_owners.append(owner)
+				tile.remove_abbot()
+				visualboard.remove_meeple(tile, Tile.CHURCH)
+				
 	return church_owners
 	
 func churches_around(pos: Vector2):

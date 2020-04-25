@@ -11,9 +11,10 @@ var stack = []
 func _init():
 	
 	""" FOR CHURCH TESTS
+	"""
 	var tiles_amount = {
-		'ChurchTile': 10, 
-		'ChurchRoadTile': 10
+		'ChurchTile': 40, 
+		#'ChurchRoadTile': 10
 	}
 	"""
 	
@@ -42,7 +43,7 @@ func _init():
 						'Road3City1Tile': 3,
 						'Road4Tile': 1
 	}
-
+	"""
 	for key in tiles_amount.keys():
 		for i in range(0,tiles_amount[key]):
 			var tile = load('res://scripts/tiles/'+key+'.gd').new()
