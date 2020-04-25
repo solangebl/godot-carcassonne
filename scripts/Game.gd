@@ -109,20 +109,11 @@ func assign_church_points():
 	for user in users:
 		user.add_points(CHURCH_POINTS)
 
-# WIP: this one will be replaced by assign_points
-func calculate_points():
-	var points = 0
-	var road_points = board.calculate_road_points()
-	var city_points = board.calculate_city_points()
-	
-	return points
 
 func end_turn():
 	# add points if any - to the corresponding players
-	#var points = calculate_points()
-	var current_player = players.current_player()
-	#current_player.add_points(points)
 	assign_points()
+	var current_player = players.current_player()
 	current_player.get_hud().get_node("Score").text = str(current_player.get_score())
 	current_player.get_hud().get_node("Meeples").text = str(current_player.meeples_left())
 	# move to next player
