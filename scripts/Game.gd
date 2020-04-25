@@ -19,17 +19,9 @@ func _ready():
 	stack = TileStack.new()
 	board = Board.new($Board2D)
 	
-	var player1 = Player.new("Pato")
-	var player2 = Player.new("Soli")
+	players = Players
 	
-	var players_list = []
-	players_list.append(player1)
-	players_list.append(player2)
-	
-	players = Players.new()
-	
-	for p in players_list:
-		players.add(p)
+	for p in players.get_players():
 		var player_hud = load('res://scenes/PlayerHUD.tscn').instance()
 		var meeple = load('res://assets/meeple_'+p.get_color()+'.png')
 		player_hud.get_node("Name").text = p.player_name()
