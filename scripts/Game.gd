@@ -17,7 +17,7 @@ func _ready():
 	stack = TileStack.new()
 	board = Board.new($Board2D)
 	
-	players = get_node("/root/Players") 
+	players = Players
 	
 	for p in players.get_players():
 		var player_hud = load('res://scenes/PlayerHUD.tscn').instance()

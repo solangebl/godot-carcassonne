@@ -1,10 +1,8 @@
 extends MarginContainer
 
-var players
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	players = get_node("/root/Players") 
-
+	pass
 
 func _on_StartGame_gui_input(event):
 
@@ -13,7 +11,7 @@ func _on_StartGame_gui_input(event):
 		var player1 = Player.new($VBoxContainer/PlayerList/Player1.text)
 		var player2 = Player.new($VBoxContainer/PlayerList/Player2.text)
 		
-		players.add(player1)
-		players.add(player2)
+		Players.add(player1)
+		Players.add(player2)
 		
 		get_tree().change_scene("res://scenes/Game.tscn")
