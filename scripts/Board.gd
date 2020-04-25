@@ -71,7 +71,11 @@ func remove_last_tile():
 	last_tile = null
 	
 func show_meeple_options(color):
-	visualboard.show_meeple_options(color, last_tile)
+	var options = []
+	for n in last_tile.get_children():
+		if n is Position2D:
+			options.append(n)
+	visualboard.show_meeple_options(options, color, last_tile)
 	
 func place_meeple(position):
 	visualboard.place_meeple(position, last_tile)

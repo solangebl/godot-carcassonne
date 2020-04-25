@@ -35,14 +35,13 @@ func show_tile_on_board(tile, b_pos: Vector2):
 func remove_tile(tile):
 	remove_child(tile)
 	
-func show_meeple_options(color, tile):
-	for n in tile.get_children():
-		if n is Position2D:
-			var m = load('res://scenes/Meeple.tscn').instance()
-			m.get_node('Button').set_normal_texture(load("res://assets/meeple_"+color+".png"))
-			m.set_rotation(deg2rad(-1*tile.get_tile_rotation()*90))
-			m.modulate = Color(1,1,1,0.5)
-			n.add_child(m)
+func show_meeple_options(options, color, tile):
+	for n in options:
+		var m = load('res://scenes/Meeple.tscn').instance()
+		m.get_node('Button').set_normal_texture(load("res://assets/meeple_"+color+".png"))
+		m.set_rotation(deg2rad(-1*tile.get_tile_rotation()*90))
+		m.modulate = Color(1,1,1,0.5)
+		n.add_child(m)
 	
 func place_meeple(position, tile):
 	for p in tile.get_children():
