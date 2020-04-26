@@ -5,7 +5,7 @@ const FULL_ITEM_SIZE = 330
 var scale_perc = 1
 var item_size = FULL_ITEM_SIZE
 
-var board_dimentions = Vector2(15,15)
+var board_dimentions = Vector2(30,30)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,7 +14,11 @@ func _ready():
 	_set_dimentions()
 	
 	set_cell_size(Vector2(item_size, item_size))
+	
 	scale_perc = (item_size)/FULL_ITEM_SIZE
+	print(item_size)
+	print(scale_perc)
+	print(get_viewport().size)
 	
 func get_board_dimentions():
 	return board_dimentions
@@ -70,11 +74,11 @@ func place_meeple(position, tile):
 
 # Calculates item size based on viewport height and board y dimention
 func _calculate_item_size():
-	var act_h = get_viewport().size.y
+	var act_h = ProjectSettings.get_setting("display/window/size/height")
 	return float(act_h)/get_board_dimentions().y
 	
 func _set_dimentions():
-	var act_w = get_viewport().size.x
+	var act_w = ProjectSettings.get_setting("display/window/size/width")
 	var w_items = act_w/item_size
 	board_dimentions.x = w_items
 		
